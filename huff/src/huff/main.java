@@ -61,6 +61,29 @@ public class main {
     }   
         
     
+    public static String findPath(TreeNode t, int ch) {
+        todoList todo = new todoList(t, null, ""); //not done
+        
+        while (todo.getNext() != null) 
+        {
+            if (todo.getNode().isLeaf() == true) {
+                if (((TreeLeaf)todo.getNode()).getChar() == ch) {
+                    return todo.getPath();
+                }
+                    
+            }
+            else {
+                
+                todoList left = new todoList(todo.getNode().getLeft(), null, todo.getPath() + "0");
+                todo.add(left);
+                todoList right = new todoList(todo.getNode().getRight(), null, todo.getPath() + "1");
+                todo.add(right);
+            }
+            todo = todo.getNext();
+        }
+        System.out.print("FAILURE");
+        return "";
+    }
     
     public static void main(String[] args) throws IOException, FileNotFoundException{
         FreqCounter[] freqarray = new FreqCounter[256];
@@ -109,6 +132,10 @@ public class main {
         
         System.out.println(nodes[0].getWt());
         
+        //would be testing if i didn't have a failed file read
+        String x = findPath(nodes[0],101);
+        System.out.println(x);
         
+   
     }
 }

@@ -29,7 +29,7 @@ public class TreeNode {
     public int getWt() {
         return wt;
     }
-    public boolean isLeaf(TreeNode t) {
+    public boolean isLeaf() {
         return false;
 }
 }
