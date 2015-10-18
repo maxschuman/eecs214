@@ -16,7 +16,7 @@ import java.io.IOException;
  *
  * @author Admin
  */
-public class main {
+public class Huff {
     public static TreeNode[] HuffmanIterate(TreeNode[] nodes){
         int a = -1, b = -1; //a is smallest weight, b is next smallest weight, both are indices of the position of these nodes in the array
         int minWeight = Integer.MAX_VALUE, nextLeast = Integer.MAX_VALUE;
@@ -59,29 +59,29 @@ public class main {
         
         return result;
     }   
-        
     
-    public static String findPath(TreeNode t, int ch) {
-        todoList todo = new todoList(t, null, ""); //not done
+    
+    public static String findPath(TreeNode t, int ch){
+        ToDoNode root = new ToDoNode(t, null, "");
+        ToDoQueue todo = new ToDoQueue(root);
+        ToDoNode left, right;
         
-        while (todo.getNext() != null) 
-        {
-            if (todo.getNode().isLeaf() == true) {
-                if (((TreeLeaf)todo.getNode()).getChar() == ch) {
-                    return todo.getPath();
+        while(todo.getHead() != null){
+            if(todo.getHead().getNode().isLeaf()){
+                if(((TreeLeaf)(todo.getHead().getNode())).getChar() == ch){
+                    return todo.getHead().getPath();
                 }
-                    
             }
-            else {
-                
-                todoList left = new todoList(todo.getNode().getLeft(), null, todo.getPath() + "0");
+            
+            else{
+                left = new ToDoNode(todo.getHead().getNode().getLeft(), null, todo.getHead().getPath() + "0");
                 todo.add(left);
-                todoList right = new todoList(todo.getNode().getRight(), null, todo.getPath() + "1");
+                right = new ToDoNode(todo.getHead().getNode().getRight(), null, todo.getHead().getPath() + "1");
                 todo.add(right);
             }
-            todo = todo.getNext();
+            todo.removeFront();
         }
-        System.out.print("FAILURE");
+        System.out.print("get out of the race Lincoln you look silly");
         return "";
     }
     
@@ -96,20 +96,20 @@ public class main {
         BitReader in = null;
         
         try{
-            in = new BitReader("C:\\Users\\Admin\\Documents\\1 Fall 2015\\EECS 214\\feelthechafe.txt");
+            in = new BitReader(args[0]);
         }
         catch(Exception e){
             System.out.print("Fuck you Jesse");
             return;
         }
-        
+        String y = "";
         int chafe;
         while(!(in.isEof())){
             chafe = in.readBits(8);
-            
+            y += (char)chafe;
             freqarray[chafe].Increment();
         }
-        
+        in.close();
         
         int chafee = 0;
         for(FreqCounter c: freqarray) {
@@ -131,10 +131,23 @@ public class main {
         }
         
         System.out.println(nodes[0].getWt());
-        
+        String x = "";
         //would be testing if i didn't have a failed file read
-        String x = findPath(nodes[0],101);
-        System.out.println(x);
+        for(char c : y.toCharArray()){
+            x += findPath(nodes[0],(int)c);
+        }
+        
+        while(x.length() % 8 != 0){
+            x += "0";
+        }
+        
+        BitWriter out = new BitWriter(args[1]);
+        
+        for(int j = 0; j < x.length(); j += 8){
+            out.writeBits(Integer.parseInt(x.substring(j, j + 8), 2), 8);
+        }
+        
+        out.close();
         
    
     }
