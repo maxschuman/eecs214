@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  * #feelthechafe #feelit #areyoufeelingitnowSam #areyou #chafeeforprez #chafeeforking #chafeeformortysjob
+ * #Iheartchafee
  */
 package huff;
 
@@ -16,7 +17,7 @@ import java.io.IOException;
  *
  * @author Admin
  */
-public class Huff {
+public class Encode {
     public static TreeNode[] HuffmanIterate(TreeNode[] nodes){
         int a = -1, b = -1; //a is smallest weight, b is next smallest weight, both are indices of the position of these nodes in the array
         int minWeight = Integer.MAX_VALUE, nextLeast = Integer.MAX_VALUE;
@@ -85,6 +86,17 @@ public class Huff {
         return "";
     }
     
+    public static void encodeTree(FreqCounter[] f, int numNodes, BitWriter out) throws IOException{
+        out.writeBits(numNodes, 8); //writes to file the number of leaves and weights decoder should be expecting
+        
+        for(FreqCounter c : f){
+            if(c.GetCount() != 0){
+                out.writeBits(c.GetVal(), 8); //encodes the character represented by a leaf
+                out.writeBits(c.GetCount(), 32); //encodes the weight on said leaf
+            }
+        }
+    }
+    
     public static void main(String[] args) throws IOException, FileNotFoundException{
         FreqCounter[] freqarray = new FreqCounter[256];
         FreqCounter f;
@@ -130,18 +142,21 @@ public class Huff {
             nodes = HuffmanIterate(nodes);
         }
         
-        System.out.println(nodes[0].getWt());
+        //System.out.println(nodes[0].getWt());
         String x = "";
-        //would be testing if i didn't have a failed file read
+        
         for(char c : y.toCharArray()){
             x += findPath(nodes[0],(int)c);
         }
-        
+        short pad = 0;
         while(x.length() % 8 != 0){
-            x += "0";
+            x = "0" + x;
+            pad++;
         }
         
         BitWriter out = new BitWriter(args[1]);
+        out.writeBits(pad, 8); //encodes the padding in the front of the message, which should be read and discarded before use
+        encodeTree(freqarray, chafee, out); //encodes data used to generate huffman tree
         
         for(int j = 0; j < x.length(); j += 8){
             out.writeBits(Integer.parseInt(x.substring(j, j + 8), 2), 8);
