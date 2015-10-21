@@ -102,6 +102,8 @@ public class Decode {
         x += (char)((TreeLeaf)t).getChar(); //ensures final character is added to file, because while loop stops one char short
         in.close();
         
+        
+        
         BitWriter out = new BitWriter(args[1]);
         
         for(int j = 0; j < x.length(); j++){
