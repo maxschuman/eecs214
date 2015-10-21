@@ -17,7 +17,7 @@ public class Decode {
    public static TreeNode[] HuffmanIterate(TreeNode[] nodes){
         int a = -1, b = -1; //a is smallest weight, b is next smallest weight, both are indices of the position of these nodes in the array
         int minWeight = Integer.MAX_VALUE, nextLeast = Integer.MAX_VALUE;
-        TreeNode n; //feel the chafe
+        TreeNode n;
         TreeNode[] result = new TreeNode[nodes.length - 1];
         int result_index = 0;
         for(int i = 0; i < nodes.length; i++){
@@ -77,7 +77,6 @@ public class Decode {
         
         in.readBits(padding); //reads off the padding bits, so that the remainder is simply the encoded file
         
-        /// my part now, that was all copy paste
         
         String x = "";
         boolean sam;
@@ -95,7 +94,6 @@ public class Decode {
             } 
             else {
                 x += (char)((TreeLeaf)t).getChar();
-                //System.out.print(Integer.toBinaryString(((TreeLeaf)t).getChar()));
                 t = nodes[0];
             }   
         }
@@ -111,14 +109,6 @@ public class Decode {
         }
         
         out.close();
-        //
-     /*   
-        File file = new File("/file.txt");
-        FileOutputStream out = new FileOutputStream(file);
-        out.
-          
-       }
-       */ 
         
 }
 

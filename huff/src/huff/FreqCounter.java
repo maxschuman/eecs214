@@ -6,8 +6,9 @@
 package huff;
 
 /**
- *
- * @author Max!
+ * A class for holding information about the frequencies of a character in a document
+ * 
+ * @author Max
  */
 public class FreqCounter {
     private int val;

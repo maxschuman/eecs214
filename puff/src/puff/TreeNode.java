@@ -6,8 +6,9 @@
 package puff;
 
 /**
- *
- * @author Sam "The Chafer" Freedman
+ * A class representing a node in a Huffman tree.
+ * 
+ * @author Sam Freedman
  */
 public class TreeNode {
     protected TreeNode left;

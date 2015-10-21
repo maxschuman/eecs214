@@ -2,8 +2,6 @@
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
- * #feelthechafe #feelit #areyoufeelingitnowSam #areyou #chafeeforprez #chafeeforking #chafeeformortysjob
- * #Iheartchafee
  */
 package huff;
 
@@ -21,7 +19,7 @@ public class Encode {
     public static TreeNode[] HuffmanIterate(TreeNode[] nodes){
         int a = -1, b = -1; //a is smallest weight, b is next smallest weight, both are indices of the position of these nodes in the array
         int minWeight = Integer.MAX_VALUE, nextLeast = Integer.MAX_VALUE;
-        TreeNode n; //feel the chafe
+        TreeNode n;
         TreeNode[] result = new TreeNode[nodes.length - 1];
         int result_index = 0;
         for(int i = 0; i < nodes.length; i++){
@@ -82,7 +80,7 @@ public class Encode {
             }
             todo.removeFront();
         }
-        System.out.print("get out of the race Lincoln you look silly");
+
         return "";
     }
     
@@ -111,25 +109,25 @@ public class Encode {
             in = new BitReader(args[0]);
         }
         catch(Exception e){
-            System.out.print("Fuck you Jesse");
+            System.out.print("Failure");
             return;
         }
         String y = "";
-        int chafe;
+        int ch;
         while(!(in.isEof())){
-            chafe = in.readBits(8);
-            y += (char)chafe;
-            freqarray[chafe].Increment();
+            ch = in.readBits(8);
+            y += (char)ch;
+            freqarray[ch].Increment();
         }
         in.close();
         
-        int chafee = 0;
+        int numLeaves = 0;
         for(FreqCounter c: freqarray) {
             if (c.GetCount() != 0) {
-                chafee++;
+                numLeaves++;
             }
         }
-        TreeNode[] nodes = new TreeLeaf[chafee];
+        TreeNode[] nodes = new TreeLeaf[numLeaves];
         int i = 0;
         for(FreqCounter c: freqarray) {
             if (c.GetCount() != 0) {
@@ -156,7 +154,7 @@ public class Encode {
         
         BitWriter out = new BitWriter(args[1]);
         out.writeBits(pad, 8); //encodes the padding in the front of the message, which should be read and discarded before use
-        encodeTree(freqarray, chafee, out); //encodes data used to generate huffman tree
+        encodeTree(freqarray, numLeaves, out); //encodes data used to generate huffman tree
         
         for(int j = 0; j < x.length(); j += 8){
             out.writeBits(Integer.parseInt(x.substring(j, j + 8), 2), 8);

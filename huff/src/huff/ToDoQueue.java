@@ -6,7 +6,8 @@
 package huff;
 
 /**
- *
+ * A queue holding ToDoNodes to check for encoding in the findPath method in Encode.
+ * 
  * @author Max
  */
 public class ToDoQueue {
