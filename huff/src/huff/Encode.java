@@ -85,7 +85,7 @@ public class Encode {
     }
     
     public static void encodeTree(FreqCounter[] f, int numNodes, BitWriter out) throws IOException{
-        out.writeBits(numNodes, 8); //writes to file the number of leaves and weights decoder should be expecting
+        out.writeBits(numNodes, 32); //writes to file the number of leaves and weights decoder should be expecting
         
         for(FreqCounter c : f){
             if(c.GetCount() != 0){
@@ -127,6 +127,7 @@ public class Encode {
                 numLeaves++;
             }
         }
+        
         TreeNode[] nodes = new TreeLeaf[numLeaves];
         int i = 0;
         for(FreqCounter c: freqarray) {
@@ -138,6 +139,7 @@ public class Encode {
         
         while(nodes.length > 1){
             nodes = HuffmanIterate(nodes);
+           
         }
         
         //System.out.println(nodes[0].getWt());
