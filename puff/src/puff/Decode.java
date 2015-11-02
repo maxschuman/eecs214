@@ -63,8 +63,8 @@ public class Decode {
         //read in padding
         int padding = in.readBits(8);
         //read in the number of nodes to expect in Huffman Tree
-        int numNodes = in.readBits(8);
-        
+        int numNodes = in.readBits(32);
+       
         TreeNode[] nodes = new TreeNode[numNodes];
         
         for(int z =0; z < numNodes; z++){
@@ -73,10 +73,12 @@ public class Decode {
         
         while(nodes.length > 1){
             nodes = HuffmanIterate(nodes);
+            
         }
         
         in.readBits(padding); //reads off the padding bits, so that the remainder is simply the encoded file
         
+     
         
         String x = "";
         boolean sam;
